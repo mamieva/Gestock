@@ -1,0 +1,7 @@
+{
+  "name": "routing",
+  "short_name": "routing",
+  "description": "Pruebas de routing",
+  "start_url": "/",
+  "display": "standalone"
+}
