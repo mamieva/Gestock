@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<dom-module id="userlist-page">
+  <template>
+    <style>
+      :host{
+        display: block;
+      color: red;
+      font-size: 414px;
+      }
+    </style>
+    <!-- HTML -->
+    <app-route route="{{route}}" pattern="/:page" tail="{{tailRoute}}"></app-route>
+    <!-- url="https://jsonplaceholder.typicode.com/users" -->
+    <iron-ajax auto
+    url="https://jsonplaceholder.typicode.com/users"
+    handle-as="json"
+    last-response="{{response}}">
+    </iron-ajax>
+
+    <paper-card style="height: 200px; width: 200px;">
+      <iron-pages attr-for-selected="name" selected="{{page}}" fallback="0">
+
+        <paper-card name="users" heading="Usuarios">
+          <template is="dom-repeat" items="[[response]]">
+            <paper-item class="container-horizontal">
+              <!-- <span class="flexchild">{{item._id}}</span> -->
+              <span class="flex3child name">{{item.username}}</span>
+              <!-- <span class="flex4child password">{{item.password}}</span>
+              <span class="flex4child status">{{item.status}}</span>
+              <span class="flex4child date">{{item.createdAt}}</span>
+              <span class="flex4child user">{{item.createdBy}}</span> -->
+            </paper-item>
+          </template>
+        </paper-card>
+
+      </iron-pages>
+    </paper-card>
+    <!-- /HTML -->
+  </template>
+  <script>
+    Polymer({
+      is: 'userlist-page',
+    })
+  </script>
+</dom-module>

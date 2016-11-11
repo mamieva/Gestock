@@ -8,42 +8,48 @@
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <!-- Componentes propios -->
 <link rel="import" href="./card-item.html">
+<link rel="import" href="./userlist-page.html">
+
 <dom-module id="config-page">
   <template>
     <style>
-      .container-vertical {
-        @apply(--layout-vertical);
-        @apply(--layout-center-justified)
-      }
       .container-horizontal {
         @apply(--layout-horizontal);
-        @apply(--layout-justified);
+        @apply(--layout-wrap);
+        width: 100%;
       }
-      iron-selector a {
+      @media (max-width: 680px) {
+        .container-horizontal{
+          @apply(--layout-center-justified);
+        }
+        card-item{
+          width: 100%;
+        }
+      }
+      @media (min-width: 680px) {
+        card-item{
+          width: 33.33%;
+        }
+      }
+      @media (min-width: 990px) {
+        card-item{
+          width: 25%;
+        }
+      }
+      iron-selector {
+        width: 100%;
+        display: block;
         text-decoration: none;
         color: black;
       }
-      paper-card {
-        margin: 0.5em 1em;
-        width: 100%;
-      }
       paper-item {
         font-size: 2em;
-      }
-
-      .flexchild {
-        @apply(--layout-flex);
-      }
-      .flex3child {
-        @apply(--layout-flex-3);
-      }
-      .flex4child {
-        @apply(--layout-flex-4);
       }
       /*Estilos de la tabla*/
       span {
         font-size:0.7em;
       }
+      /*}
       .name {
         width: 20em;
         overflow: hidden;
@@ -63,53 +69,29 @@
       }
       .user {
         width: 10em;
-      }
+      }*/
     </style>
-    <div class="container-vertical">
+    <!-- <div class="container-horizontal"> -->
       <app-route route="{{route}}" pattern="/:page" tail="{{tailRoute}}">
 
       </app-route>
-      <paper-card heading="Configuracion">
-        <iron-selector attr-for-selected="name" selected="{{page}}" fallback="0">
-          <a href="#/users" name="users">
-            <card-item label="Usuarios" icon="social:person">
-              Esta opcion permite configurar los usuarios
-            </card-item>
-          </a>
-          <a href="#/roles"name="roles">
-            <card-item label="Roles" icon="icon-user:Layer_1">
-              Esta opcion permite definir los roles aplicables en el sistema
-            </card-item>
-            </a>
-        </iron-selector>
-      </paper-card>
-      <!-- url="https://jsonplaceholder.typicode.com/users" -->
-      <iron-ajax auto
-      url="http://localhost:3000/users"
-      handle-as="json"
-      last-response="{{response}}">
-    </iron-ajax>
+      <iron-selector class="container-horizontal"
+                     attr-for-selected="name"
+                     selected="{{page}}"
+                     fallback="0">
 
+        <card-item label="Usuarios" icon="icon-set:usuario" href="#/users" name="users">
+          Esta opcion permite configurar los usuarios
+        </card-item>
+        <card-item label="Roles" icon="icon-set:roles" href="#/roles" name="roles">
+          Esta opcion permite configurar los usuarios
+        </card-item>
+
+      </iron-selector>
       <iron-pages attr-for-selected="name" selected="{{page}}" fallback="0">
-
-        <paper-card name="users" heading="Usuarios">
-          <template is="dom-repeat" items="[[response]]">
-            <paper-item class="container-horizontal">
-              <!-- <span class="flexchild">{{item._id}}</span> -->
-              <span class="flex3child name">{{item.username}}</span>
-              <span class="flex4child password">{{item.password}}</span>
-              <span class="flex4child status">{{item.status}}</span>
-              <span class="flex4child date">{{item.createdAt}}</span>
-              <span class="flex4child user">{{item.createdBy}}</span>
-            </paper-item>
-          </template>
-        </paper-card>
-
-        <div name="roles">Roles</div>
-
+        <userlist-page name="users" route="{{tailRoute}}"></userlist-page>
       </iron-pages>
 
-    </div>
   </template>
 
   <script>
