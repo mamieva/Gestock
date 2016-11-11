@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="./icon-user.html">
+<link rel="import" href="./icon-set.html">
 
 
 <!--
@@ -14,15 +15,15 @@ Tarjeta de Menu
 <dom-module id="card-item">
   <template>
     <style>
-      :host {
+    :host {
         display: block;
       }
-      .mobile-app {
+    .mobile-app {
       max-width: 320px;
     }
     .toolbar {
       height: 48px;
-      padding: 16px;
+      padding: 8px;
       background: var(--default-primary-color);
       color: var(--text-primary-color);
       @apply(--paper-font-display1);
@@ -68,16 +69,19 @@ Tarjeta de Menu
     }
 
     iron-icon {
-
-    --iron-icon-height: 32px;
-    --iron-icon-width: 32px;
+    /*--iron-icon-height: 32px;
+    --iron-icon-width: 32px;*/
+    }
+    span{
+      width: 80%;
+      font-size: 50%;/*calc(1vw + 1vh + 1vmin);*/
     }
     </style>
-    <section class="mobile-app paper-card">
+    <section class="paper-card">
         <div class="toolbar">
         <!-- <div> -->
-            [[label]]
-            <iron-icon icon=[[icon]]></iron-icon>
+        <iron-icon icon=[[icon]]></iron-icon>
+        <span>[[label]]</span>
         </div>
 
         <paper-ripple recenters></paper-ripple>
@@ -104,8 +108,19 @@ Tarjeta de Menu
         label: {
           type: String
         },
-
+        href:{
+          type: String,
+          value: '#'
+        }
+      }
+      ,
+      listeners: {
+        'click': 'handleClick',
       },
+      handleClick: function(e) {
+        console.info(e.target.id + ' was clicked.');
+        location.href= this.href;
+      }
 
     });
   </script>

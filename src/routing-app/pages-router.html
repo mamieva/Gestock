@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="./config-page.html">
+
+<dom-module id="pages-router">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-route route="{{route}}"
+                  pattern="configuration/list"
+                  active="{{configurationActive}}"></app-route>
+
+    <config-page active={{configurationActive}}></config-page>
+
+    <!-- <post-page post="{{postsData.slug}}"
+               active="{{postsActive}}"></post-page> -->
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'pages-router'
+    });
+  </script>
+
+</dom-module>

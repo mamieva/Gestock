@@ -17,6 +17,7 @@
 <link rel="import" href="./main-page.html">
 <link rel="import" href="./config-page.html">
 <link rel="import" href="./sales-page.html">
+<link rel="import" href="./pages-router.html">
 <dom-module id="routing-app">
   <template>
     <style is="custom-style">
@@ -26,9 +27,16 @@
         }
     </style>
     <!-- Enrutador -->
-    <app-location route="{{route}}" useHashAsPath></app-location>
-    <app-route route="{{route}}" pattern="/:page" tail="{{tailRoute}}" active="{{mainActive}}">
-
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <!-- <app-route route="{{route}}"
+               pattern="/:page"
+               data="{{pageData}}"
+               tail="{{pageTail}}"></app-route> -->
+    <app-route route="{{route}}" pattern="/:page" data="{{pageData}}">
+    </app-route>
+    <app-route route="{{route}}" pattern="/config" tail="{{configRoute}}">
+    </app-route>
+    <app-route route="{{route}}" pattern="/sales" tail="{{salesRoute}}">
     </app-route>
     <!-- Aplicacion -->
     <paper-drawer-panel>
@@ -40,12 +48,12 @@
         </paper-toolbar>
         <!-- Menu del panel lateral -->
         <paper-menu>
-        <iron-selector attr-for-selected="name" selected="{{page}}" fallback-selection="3">
+        <iron-selector attr-for-selected="name" selected="{{pageData.page}}">
           <paper-item name="home">
             <a href="#/">Inicio</a>
           </paper-item>
-          <paper-item name="configuration">
-            <a href="#/configuration">Configuración</a>
+          <paper-item name="config">
+            <a href="#/config">Configuración</a>
           </paper-item>
           <paper-item name="sales">
             <a href="#/sales">Ventas</a>
@@ -62,10 +70,12 @@
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           <div class="title">Sistema de Gestión de Inventario</div>
         </paper-toolbar>
-        <iron-pages attr-for-selected="name" selected="{{page}}" fallback-selection="3">
-          <main-page name="home" route="{{tailRoute}}"></main-page>
-          <config-page name="configuration" route="{{tailRoute}}"></config-page>
-          <sales-page name="sales" route="{{tailRoute}}"></sales-page>
+        <!-- <pages-router route="{{pageTail}}"
+                      page="{{pageData.page}}"></pages-router> -->
+        <iron-pages attr-for-selected="name" selected="{{pageData.page}}" selected-attribute="selected">
+          <main-page name="home" route="{{route}}"></main-page>
+          <config-page name="config" route="{{configRoute}}" ></config-page>
+          <sales-page name="sales" route="{{salesRoute}}"></sales-page>
           <div name="purchases">Compras</div>
           <div name="cash">Caja</div>
           <div name="inventory">Inventario</div>
@@ -79,35 +89,46 @@
   <script>
     Polymer({
       is: 'routing-app',
-      properties: {
-        page: {
-          type: String,
-          value: '0',
-          observer: '_pageChanged'
-        },
-        route: {
-          value: function () {
-            return {path:'/', prefix: '', __queryParams: {}}
-          }
-        },
-        pattern: {
-          value: function() {
-            let pathname = window.location.pathname
-            // console.log('--PATHNAME--', pathname);
-            return pathname.substring(0, pathname.lastIndexOf('/'))
-          }
+      observers: [
+        '_updateScroll(route)'
+      ],
+      attached: function() {
+        if (!this.pageData.page) {
+          this.set('pageData.page', 'home');
         }
       },
-      ready: function () {
-        // console.log('--PAGINA LISTA--', this.page, '-RUTA-',this.route);
-        this.page = 'home'
-      },
-      _pageChanged: function () {
-        // console.log('--PAGINA--', this.page, '-RUTA-',this.route, '-PATRON-', this.pattern);
-        if (this.page) {
-          if (this.page=='home') {}
-        }
+      _updateScroll: function() {
+        window.scroll(0, 0);
       }
+      // properties: {
+      //   page: {
+      //     type: String,
+      //     value: '0',
+      //     observer: '_pageChanged'
+      //   },
+      //   route: {
+      //     value: function () {
+      //       return {path:'/', prefix: '', __queryParams: {}}
+      //     }
+      //   },
+      //   pattern: {
+      //     value: function() {
+      //       let pathname = window.location.pathname
+      //       // console.log('--PATHNAME--', pathname);
+      //       return pathname.substring(0, pathname.lastIndexOf('/'))
+      //     }
+      //   }
+      // },
+      // ready: function () {
+      //   // console.log('--PAGINA LISTA--', this.page, '-RUTA-',this.route);
+      //   this.page = 'home'
+      // },
+      // _pageChanged: function () {
+      //   // console.log('--PAGINA--', this.page, '-RUTA-',this.route, '-PATRON-', this.pattern);
+      //   if (this.page) {
+      //     if (this.page=='home') {}
+      //   }
+      // }
     });
   </script>
 </dom-module>
