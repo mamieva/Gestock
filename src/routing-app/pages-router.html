@@ -1,6 +1,7 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="./config-page.html">
+<link rel="import" href="./userlist-page.html">
 
 <dom-module id="pages-router">
 
@@ -13,10 +14,19 @@
     </style>
 
     <app-route route="{{route}}"
-                  pattern="configuration/list"
-                  active="{{configurationActive}}"></app-route>
+              pattern="/home"
+              active="{{homeActive}}"></app-route>
+    <app-route route="{{route}}"
+              pattern="/config"
+              active="{{configurationActive}}"></app-route>
+    <app-route route="{{route}}"
+              pattern="/list"
+              active="{{listActive}}"></app-route>
 
-    <config-page active={{configurationActive}}></config-page>
+
+    <main-page page={{page}} active="{{homeActive}}"></main-page>
+    <config-page page={{page}} active={{configurationActive}}></config-page>
+    <userlist-page type="{{type}}" active={{listActive}}></userlist-page>
 
     <!-- <post-page post="{{postsData.slug}}"
                active="{{postsActive}}"></post-page> -->
@@ -25,7 +35,12 @@
 
   <script>
     Polymer({
-      is: 'pages-router'
+      is: 'pages-router',
+      attributeChanged: function(){
+        console.log(this.route.path);
+        console.log(this.route);
+        console.log(this.page);
+      }
     });
   </script>
 
