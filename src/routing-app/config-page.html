@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- <link rel="import" href="../../bower_components/polymer/polymer.html"> -->
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
@@ -6,14 +6,21 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+
 <!-- Componentes propios -->
 <link rel="import" href="./card-item.html">
 <link rel="import" href="./userlist-page.html">
+<link rel="import" href="./pages-router.html">
 
 <dom-module id="config-page">
   <template>
     <style>
     :host {
+        display: none;
+      }
+      :host([active]) {
         display: block;
       }
       .container-horizontal {
@@ -75,9 +82,9 @@
       }*/
     </style>
     <!-- <div class="container-horizontal"> -->
-      <app-location route="{{route}}"></app-location>
+      <!-- <app-location route="{{route}}"></app-location> -->
       <app-route route="{{route}}"
-                  pattern="/:type"
+                  pattern="#/config/:type"
                   data="{{typeData}}"
                   tail="{{typeTail}}">
 
@@ -86,18 +93,22 @@
                      attr-for-selected="name"
                      selected="{{typeData.type}}">
 
-        <card-item label="Usuarios" icon="icon-set:usuario" name="users" href="#/{{typeData.type}}">
+        <card-item label="Usuarios" icon="icon-set:usuario" name="user" href="#/config/user/list" on-click="handleClick">
           Esta opcion permite configurar los usuarios
         </card-item>
-        <card-item label="Roles" icon="icon-set:roles" name="roles" href="#/{{typeData.type}}">
+        <card-item label="Roles" icon="icon-set:roles" name="role" href="#/config/role/list">
           Esta opcion permite configurar los usuarios
         </card-item>
 
       </iron-selector>
-      <iron-pages attr-for-selected="name" selected="{{typeData.type}}" selected-attribute="selected">
+
+      <!-- <pages-router route="{{typeTail}}"
+                    type="{{typeData.type}}"></pages-router> -->
+
+      <!-- <iron-pages attr-for-selected="name" selected="{{typeData.type}}" selected-attribute="selected">
         <userlist-page name="users" route="{{typeTail}}"></userlist-page>
         <userlist-page name="roles" route="{{typeTail}}"></userlist-page>
-      </iron-pages>
+      </iron-pages> -->
 
   </template>
 
@@ -117,6 +128,9 @@
       },
       attributeChanged: function(){
         console.log(this.route);
+      },
+      handleClick: function(e,detail){
+        this.active = false;
       }
     });
 

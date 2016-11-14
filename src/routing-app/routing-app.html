@@ -1,5 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
@@ -33,10 +36,7 @@
                data="{{pageData}}"
                tail="{{pageTail}}"></app-route> -->
     <app-route route="{{route}}" pattern="/:page" data="{{pageData}}">
-    </app-route>
-    <app-route route="{{route}}" pattern="/config" tail="{{configRoute}}">
-    </app-route>
-    <app-route route="{{route}}" pattern="/sales" tail="{{salesRoute}}">
+
     </app-route>
     <!-- Aplicacion -->
     <paper-drawer-panel>
@@ -50,7 +50,7 @@
         <paper-menu>
         <iron-selector attr-for-selected="name" selected="{{pageData.page}}">
           <paper-item name="home">
-            <a href="#/">Inicio</a>
+            <a href="#/home">Inicio</a>
           </paper-item>
           <paper-item name="config">
             <a href="#/config">Configuración</a>
@@ -70,17 +70,19 @@
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           <div class="title">Sistema de Gestión de Inventario</div>
         </paper-toolbar>
-        <!-- <pages-router route="{{pageTail}}"
-                      page="{{pageData.page}}"></pages-router> -->
-        <iron-pages attr-for-selected="name" selected="{{pageData.page}}" selected-attribute="selected">
+
+        <pages-router route="{{route}}"
+                      page="{{pageData.page}}"></pages-router>
+
+        <!-- <iron-pages attr-for-selected="name" selected="{{pageData.page}}" selected-attribute="selected">
           <main-page name="home" route="{{route}}"></main-page>
           <config-page name="config" route="{{configRoute}}" ></config-page>
           <sales-page name="sales" route="{{salesRoute}}"></sales-page>
           <div name="purchases">Compras</div>
           <div name="cash">Caja</div>
-          <div name="inventory">Inventario</div>
-          
-        </iron-pages>
+          <div name="inventory">Inventario</div> -->
+
+        <!-- </iron-pages> -->
       </paper-header-panel>
 
     </paper-drawer-panel>

@@ -6,6 +6,12 @@
 <dom-module id="main-page">
   <template>
     <style>
+    :host {
+        display: none;
+      }
+      :host([active]) {
+        display: block;
+      }
     .container {
       @apply(--layout-vertical);
       @apply(--layout-center-justified);
@@ -57,7 +63,12 @@
       is: 'main-page',
 
       properties: {
-      },
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+      }
 
     });
   </script>
